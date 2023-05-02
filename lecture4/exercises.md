@@ -8,9 +8,7 @@ That can be acomplished using this regex: `[^a]*a[^a]*a[^a]*a`. While `[^a]*` ta
 #### b) Avoid all words that end in `'s`:
 
 Adding the following: `[^('s)]$` ensures that words finished in `'s` are not being matched.Here `^('s)` means that the regex has to avoid the group `'s`. The `$` sign means that it has to be the end of the line.
-- asd
-- aasd
-	- asdasd
-	- asdasd
+- b.1) By now the regex has a problem. Words like `Antofagasta` will be matched and it has 4 `a`'s. That is because I am not considering uppercase letters. So, the regex should be `
+[^(A|a)]*(A|a)[^a]*a[^a]*a` so it ignores `A`'s at the begining of the word if there is already 3 `a`'s and to match `A` if there is 3 `a`'s.
 ## Exercise 3:
 To do in-place substitution it is quite tempting to do something like `sed s/REGEX/SUBSTITUTION/ input.txt > input.txt`. However this is a bad idea, why? Is this particular to `sed`? `Use man sed` to find out how to accomplish this.
