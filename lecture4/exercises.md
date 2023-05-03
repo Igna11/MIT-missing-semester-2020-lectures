@@ -23,3 +23,9 @@ cat /usr/share/dict/wrds | grep -P "\b[^(a|A)]*(a|A)[^a]*a[^a]*a[^('s)]$" | rev 
 ```
 ## Exercise 3:
 To do in-place substitution it is quite tempting to do something like `sed s/REGEX/SUBSTITUTION/ input.txt > input.txt`. However this is a bad idea, why? Is this particular to `sed`? `Use man sed` to find out how to accomplish this.
+
+- a) According to chatgpt, this is a bad idea because: "because the shell will first truncate the file input.txt before sed even starts processing it. This means that the input file will be empty before sed can read it, and therefore, nothing will be written back to it. So, instead of performing the substitution in-place, you should use a temporary file to write the output and then move the temporary file back to the original file." 
+- b) To accomplish this I can do `sed 's/REGEX/REPLACE/' --in-place input.txt`.
+
+## Exercise 4:
+Find your average, median, and max system boot time over the last ten boots. Use journalctl on Linux and log show on macOS, and look for log timestamps near the beginning and end of each boot. On Linux, they may look something like:
