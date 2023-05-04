@@ -28,4 +28,31 @@ To do in-place substitution it is quite tempting to do something like `sed s/REG
 - b) To accomplish this I can do `sed 's/REGEX/REPLACE/' --in-place input.txt`.
 
 ## Exercise 4:
-Find your average, median, and max system boot time over the last ten boots. Use journalctl on Linux and log show on macOS, and look for log timestamps near the beginning and end of each boot. On Linux, they may look something like:
+Find your average, median, and max system boot time over the last ten boots. Use journalctl on Linux and log show on macOS, and look for log timestamps near the beginning and end of each boot. 
+I used this [link](https://github.com/shapeng1998/missing-semester-solutions/blob/main/Lecture%204/Solutions.md) as a reference to solve this excercise.
+
+- a) I need to capture the following log: `Startup finished in`, so I use `grep` as follows:
+```sh
+journalctl | grep -E "Startup finished in (\w.?)+ (kernel)+"
+```
+which takes care of fetching the logs containing the desired message. The result is a message of this form
+```sh
+abr 07 22:25:27 igna-[...]systemd[1]: Startup finished in 6.644s (kernel) + 12.495s (userspace) = 19.139s.
+```
+- b) Now I need to keep the last seconds. But I don't want the `s.`. So, lets remove it using `sed -E "s/s.$//"` The result would be
+```sh
+abr 07 22:25:27 igna-[...]systemd[1]: Startup finished in 6.644s (kernel) + 12.495s (userspace) = 19.139
+```
+- c) Now I only want the last seconds, so I remove everything else using `sed` again: `sed -E "s/(.*) = (.*)/\2/"`. Where there are two groups defined and I am telling `sed` to replace both groups with only the last one, in this case the seconds. The result would be
+```sh
+19.139
+```
+- d) Finally, I will use python to manipulate the data and get the statistics:
+```sh
+python -c 'import sys; x = sys.stdin.read().split("\n"); x.pop(); times = list(map(float, x)); import numpy as np; print("mean:", np.mean(times)); print("median:", np.median(times));print("max:", np.max(times))'
+``` 
+The whole solution is:
+```sh
+journalctl | grep -E "Startup finished in (\w\.?)+ \(kernel\) \+" | sed -E "s/s.$//" | sed -E "s/(.*) = (.*)/\2/" | python -c 'import sys; x = sys.stdin.read().split("\n"); x.pop(); times = list(map(float, x)); import numpy as np; print("mean:", np.mean(times)); print("median:", np.median(times));print("max:", np.max(times))'
+```
+
