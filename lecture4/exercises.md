@@ -55,4 +55,8 @@ The whole solution is:
 ```sh
 journalctl | grep -E "Startup finished in (\w\.?)+ \(kernel\) \+" | sed -E "s/s.$//" | sed -E "s/(.*) = (.*)/\2/" | python -c 'import sys; x = sys.stdin.read().split("\n"); x.pop(); times = list(map(float, x)); import numpy as np; print("mean:", np.mean(times)); print("median:", np.median(times));print("max:", np.max(times))'
 ```
+## Exercise 5:
+Look for boot messages that are not shared between your past three reboots (see journalctl’s -b flag). Break this task down into multiple steps. First, find a way to get just the logs from the past three boots. There may be an applicable flag on the tool you use to extract the boot logs, or you can use `sed '0,/STRING/d'` to remove all lines previous to one that matches STRING. Next, remove any parts of the line that always varies (like the timestamp). Then, de-duplicate the input lines and keep a count of each one (`uniq` is your friend). And finally, eliminate any line whose count is 3 (since it was shared among all the boots).
 
+## Exercise 6:
+Find an online data set like [this one](https://stats.wikimedia.org/EN/TablesWikipediaZZ.htm), [this one](https://ucr.fbi.gov/crime-in-the-u.s/2016/crime-in-the-u.s.-2016/topic-pages/tables/table-1), or maybe one [from here](https://www.springboard.com/blog/data-science/free-public-data-sets-data-science-project/>). Fetch it using curl and extract out just two columns of numerical data. If you’re fetching HTML data, `pup` might be helpful. For JSON data, try `jq`. Find the min and max of one column in a single command, and the difference of the sum of each column in another.
