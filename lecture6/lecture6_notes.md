@@ -113,10 +113,7 @@ printea todo el contenido actual del archivo.
 
 # EJERCICIOS:
 1. - [ ] If you don’t have any past experience with Git, either try reading the first couple chapters of [Pro Git](https://git-scm.com/book/en/v2) or go through a tutorial like [Learn Git Branching](https://learngitbranching.js.org/). As you’re working through it, relate Git commands to the data model.
-2. - [ ] Clone the repository for the [class website](https://github.com/missing-semester/missing-semester).
-
-	a. - [ ] Explore the version history by visualizing it as a graph.
-
-	b. - [ ] Who was the last person to modify README.md? (Hint: use git log with an argument).
-
-	c. - [ ] What was the commit message associated with the last modification to the collections: line of _config.yml? (Hint: use git blame and git show).
+2. - [ ] Clone the repository for the [class website](https://github.com/missing-semester/missing-semester)
+	- [ ] Explore the version history by visualizing it as a graph.
+	- [ ] Who was the last person to modify README.md? (Hint: use git log with an argument).
+	- [ ] What was the commit message associated with the last modification to the collections: line of _config.yml? (Hint: use git blame and git show).
